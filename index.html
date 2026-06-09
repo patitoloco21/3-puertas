@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Problema de las 3 Puertas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="contenedor">
+    <h1>Problema de las 3 Puertas</h1>
+
+    <p id="mensaje">Elige una puerta para comenzar.</p>
+
+    <div class="marcador">
+      <span>Ganadas: <strong id="ganadas">0</strong></span>
+      <span>Perdidas: <strong id="perdidas">0</strong></span>
+    </div>
+
+    <div class="puertas">
+      <button class="puerta" data-puerta="1"></button>
+      <button class="puerta" data-puerta="2"></button>
+      <button class="puerta" data-puerta="3"></button>
+    </div>
+
+    <div class="opciones">
+      <button id="quedarse" disabled>Quedarme</button>
+      <button id="cambiar" disabled>Cambiar</button>
+    </div>
+
+    <p id="resultado"></p>
+
+    <button id="reiniciar">Jugar otra vez</button>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

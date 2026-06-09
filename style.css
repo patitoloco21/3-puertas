@@ -1,0 +1,212 @@
+/* Aplica estilos generales a toda la página. */
+body {
+  /* Elimina el margen predeterminado. */
+  margin: 0;
+  /* Usa una fuente sencilla. */
+  font-family: Arial, sans-serif;
+  /* Crea el fondo degradado. */
+  background:
+    radial-gradient(circle at top, rgba(74, 222, 128, 0.28), transparent 45%),
+    linear-gradient(160deg, #0f172a, #164e63);
+  /* Mantiene fijo el fondo. */
+  background-attachment: fixed;
+  /* Colorea el texto de blanco. */
+  color: white;
+  /* Activa la distribución flexible. */
+  display: flex;
+  /* Centra horizontalmente el juego. */
+  justify-content: center;
+  /* Centra verticalmente el juego. */
+  align-items: center;
+  /* Ocupa toda la altura de la ventana. */
+  min-height: 100vh;
+}
+
+/* Da forma al panel principal. */
+.contenedor {
+  /* Centra su contenido textual. */
+  text-align: center;
+  /* Añade un fondo oscuro transparente. */
+  background: rgba(31, 41, 55, 0.92);
+  /* Añade espacio interior. */
+  padding: 30px;
+  /* Redondea las esquinas. */
+  border-radius: 15px;
+  /* Usa casi todo el ancho disponible. */
+  width: 90%;
+  /* Limita el ancho máximo. */
+  max-width: 700px;
+  /* Añade una sombra profunda. */
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* Organiza los dos contadores. */
+.marcador {
+  /* Coloca los contadores en fila. */
+  display: flex;
+  /* Centra los contadores. */
+  justify-content: center;
+  /* Separa ambos contadores. */
+  gap: 24px;
+  /* Añade espacio superior. */
+  margin-top: 18px;
+}
+
+/* Da estilo a cada contador. */
+.marcador span {
+  /* Añade espacio interior. */
+  padding: 8px 16px;
+  /* Coloca un fondo oscuro transparente. */
+  background: rgba(15, 23, 42, 0.75);
+  /* Redondea completamente sus extremos. */
+  border-radius: 999px;
+}
+
+/* Organiza las tres puertas. */
+.puertas {
+  /* Coloca las puertas en fila. */
+  display: flex;
+  /* Centra el grupo de puertas. */
+  justify-content: center;
+  /* Separa las puertas. */
+  gap: 20px;
+  /* Añade margen vertical. */
+  margin: 30px 0;
+}
+
+/* Define la apariencia base de cada puerta. */
+.puerta {
+  /* Permite posicionar imágenes dentro. */
+  position: relative;
+  /* Define el ancho de la puerta. */
+  width: 150px;
+  /* Define la altura de la puerta. */
+  height: 250px;
+  /* Muestra la imagen de puerta cerrada. */
+  background-image: url("img/puertacerrada.png");
+  /* Ajusta la imagen dentro del botón. */
+  background-size: contain;
+  /* Evita repetir la imagen. */
+  background-repeat: no-repeat;
+  /* Centra la imagen. */
+  background-position: center;
+  /* Elimina el borde normal. */
+  border: none;
+  /* Muestra un cursor de selección. */
+  cursor: pointer;
+}
+
+/* Ilumina una puerta al pasar el cursor. */
+.puerta:hover {
+  /* Aumenta ligeramente el brillo. */
+  filter: brightness(1.15);
+}
+
+/* Cambia la imagen de una puerta abierta. */
+.puerta.abierta {
+  /* Muestra la puerta abierta. */
+  background-image: url("img/puertaabierta.png");
+}
+
+/* Coloca una cabra dentro de puertas abiertas. */
+.puerta.abierta::after {
+  /* Crea el elemento para la imagen. */
+  content: "";
+  /* Lo coloca respecto a la puerta. */
+  position: absolute;
+  /* Deja espacio alrededor de la cabra. */
+  inset: 28% 14% 10%;
+  /* Muestra y ajusta la imagen de cabra. */
+  background: url("img/cabra.png") center / contain no-repeat;
+  /* Coloca la cabra sobre la puerta. */
+  z-index: 1;
+}
+
+/* Marca visualmente la puerta premiada. */
+.puerta.premiada {
+  /* Añade un borde exterior verde. */
+  outline: 4px solid #16a34a;
+}
+
+/* Sustituye la cabra por el auto premiado. */
+.puerta.abierta.premiada::after {
+  /* Crea el elemento para la imagen. */
+  content: "";
+  /* Lo coloca respecto a la puerta. */
+  position: absolute;
+  /* Deja espacio alrededor del auto. */
+  inset: 28% 14% 10%;
+  /* Muestra y ajusta la imagen del auto. */
+  background: url("img/auto.png") center / contain no-repeat;
+  /* Coloca el auto sobre la puerta. */
+  z-index: 1;
+}
+
+/* Marca visualmente una puerta perdedora. */
+.puerta.perdedora {
+  /* Añade un borde exterior rojo. */
+  outline: 4px solid #dc2626;
+}
+
+/* Marca visualmente la puerta elegida. */
+.puerta.elegida {
+  /* Añade un borde exterior amarillo. */
+  outline: 4px solid #facc15;
+}
+
+/* Da estilo base a los botones de acciones. */
+.opciones button,
+#reiniciar {
+  /* Añade espacio interior. */
+  padding: 12px 20px;
+  /* Separa los botones. */
+  margin: 10px;
+  /* Elimina el borde predeterminado. */
+  border: none;
+  /* Redondea sus esquinas. */
+  border-radius: 8px;
+  /* Muestra un cursor de selección. */
+  cursor: pointer;
+  /* Define el tamaño del texto. */
+  font-size: 16px;
+}
+
+/* Colorea el botón para quedarse. */
+#quedarse {
+  /* Usa fondo azul. */
+  background: #2563eb;
+  /* Usa texto blanco. */
+  color: white;
+}
+
+/* Colorea el botón para cambiar. */
+#cambiar {
+  /* Usa fondo verde. */
+  background: #16a34a;
+  /* Usa texto blanco. */
+  color: white;
+}
+
+/* Colorea el botón para reiniciar. */
+#reiniciar {
+  /* Usa fondo rojo. */
+  background: #dc2626;
+  /* Usa texto blanco. */
+  color: white;
+}
+
+/* Cambia la apariencia de botones desactivados. */
+button:disabled {
+  /* Reduce su opacidad. */
+  opacity: 0.5;
+  /* Indica que no se pueden pulsar. */
+  cursor: not-allowed;
+}
+
+/* Destaca el mensaje final. */
+#resultado {
+  /* Aumenta el tamaño del texto. */
+  font-size: 22px;
+  /* Usa texto en negrita. */
+  font-weight: bold;
+}
