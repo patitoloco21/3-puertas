@@ -71,10 +71,12 @@ body {
 
 .marcador small,
 .marcador strong {
+  /* Coloca etiqueta y valor en líneas separadas. */
   display: block;
 }
 
 .marcador small {
+  /* Usa un color tenue para las etiquetas. */
   color: #94a3b8;
 }
 
@@ -87,31 +89,43 @@ body {
 
 .dato-ganadas strong,
 .dato-exito strong {
+  /* Destaca los resultados positivos en verde. */
   color: #4ade80;
 }
 
 .dato-perdidas strong {
+  /* Destaca las derrotas en rojo. */
   color: #f87171;
 }
 
 .estrategias {
   /* Coloca ambas estrategias en columnas. */
   display: grid;
+  /* Asigna el mismo ancho a cada estrategia. */
   grid-template-columns: 1fr 1fr;
+  /* Separa las tarjetas de estrategias. */
   gap: 24px;
+  /* Añade espacio vertical alrededor. */
   margin: 18px 0;
+  /* Usa texto compacto. */
   font-size: 14px;
 }
 
 .estrategias article {
+  /* Añade espacio interior a cada estrategia. */
   padding: 12px;
+  /* Añade un fondo oscuro semitransparente. */
   background: rgba(15, 23, 42, 0.5);
+  /* Redondea las tarjetas de estrategias. */
   border-radius: 10px;
 }
 
 .estrategias article > div:first-child {
+  /* Coloca nombre y resultado en una fila. */
   display: flex;
+  /* Separa el nombre del resultado. */
   justify-content: space-between;
+  /* Separa el texto de la barra. */
   margin-bottom: 8px;
 }
 
@@ -120,26 +134,39 @@ body {
   height: 7px;
   /* Oculta el progreso fuera del contenedor. */
   overflow: hidden;
+  /* Colorea el fondo vacío de la barra. */
   background: #334155;
+  /* Redondea completamente la barra. */
   border-radius: 999px;
 }
 
 .barra span {
   /* Permite controlar el ancho del progreso. */
   display: block;
+  /* Inicia la barra sin progreso. */
   width: 0;
+  /* Ocupa toda la altura del contenedor. */
   height: 100%;
+  /* Colorea el progreso en verde. */
   background: #4ade80;
+  /* Hereda el redondeado del contenedor. */
   border-radius: inherit;
+  /* Anima los cambios de porcentaje. */
   transition: width 0.3s ease;
 }
 
 #reiniciar-estadisticas {
+  /* Añade espacio interior al botón. */
   padding: 7px 12px;
+  /* Dibuja un borde tenue. */
   border: 1px solid #64748b;
+  /* Redondea las esquinas del botón. */
   border-radius: 8px;
+  /* Mantiene transparente el fondo. */
   background: transparent;
+  /* Usa un color claro para el texto. */
   color: #cbd5e1;
+  /* Muestra el cursor de selección. */
   cursor: pointer;
 }
 
@@ -257,10 +284,12 @@ body {
 @media (max-width: 600px) {
   /* Adapta las estadísticas a pantallas pequeñas. */
   .marcador {
+    /* Reduce el marcador a dos columnas. */
     grid-template-columns: 1fr 1fr;
   }
 
   .estrategias {
+    /* Apila las estrategias en una columna. */
     grid-template-columns: 1fr;
   }
 }
