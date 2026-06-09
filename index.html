@@ -12,10 +12,26 @@
 
     <p id="mensaje">Elige una puerta para comenzar.</p>
 
-    <div class="marcador">
-      <span>Ganadas: <strong id="ganadas">0</strong></span>
-      <span>Perdidas: <strong id="perdidas">0</strong></span>
-    </div>
+    <section class="estadisticas" aria-label="Estadísticas de partidas">
+      <h2>Estadísticas</h2>
+      <div class="marcador">
+        <article><small>Partidas</small><strong id="partidas">0</strong></article>
+        <article class="dato-ganadas"><small>Ganadas</small><strong id="ganadas">0</strong></article>
+        <article class="dato-perdidas"><small>Perdidas</small><strong id="perdidas">0</strong></article>
+        <article class="dato-exito"><small>Éxito</small><strong id="porcentaje">0%</strong></article>
+      </div>
+      <div class="estrategias">
+        <article>
+          <div><span>Al quedarse</span><strong id="quedarse-estadistica">0/0 (0%)</strong></div>
+          <div class="barra"><span id="barra-quedarse"></span></div>
+        </article>
+        <article>
+          <div><span>Al cambiar</span><strong id="cambiar-estadistica">0/0 (0%)</strong></div>
+          <div class="barra"><span id="barra-cambiar"></span></div>
+        </article>
+      </div>
+      <button id="reiniciar-estadisticas">Reiniciar estadísticas</button>
+    </section>
 
     <div class="puertas">
       <button class="puerta" data-puerta="1"></button>

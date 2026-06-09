@@ -40,26 +40,107 @@ body {
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
 }
 
-/* Organiza los dos contadores. */
+/* Organiza el panel de estadísticas. */
+.estadisticas h2 {
+  /* Separa el título del panel. */
+  margin-bottom: 10px;
+  /* Define un título compacto. */
+  font-size: 18px;
+}
+
 .marcador {
-  /* Coloca los contadores en fila. */
-  display: flex;
-  /* Centra los contadores. */
-  justify-content: center;
+  /* Organiza los contadores como tarjetas. */
+  display: grid;
   /* Separa ambos contadores. */
-  gap: 24px;
+  gap: 12px;
+  /* Divide los datos en cuatro tarjetas. */
+  grid-template-columns: repeat(4, 1fr);
   /* Añade espacio superior. */
   margin-top: 18px;
 }
 
 /* Da estilo a cada contador. */
-.marcador span {
-  /* Añade espacio interior. */
-  padding: 8px 16px;
-  /* Coloca un fondo oscuro transparente. */
+.marcador article {
+  /* Añade espacio dentro de cada tarjeta. */
+  padding: 12px;
+  /* Usa un fondo oscuro semitransparente. */
   background: rgba(15, 23, 42, 0.75);
-  /* Redondea completamente sus extremos. */
+  /* Redondea las tarjetas. */
+  border-radius: 12px;
+}
+
+.marcador small,
+.marcador strong {
+  display: block;
+}
+
+.marcador small {
+  color: #94a3b8;
+}
+
+.marcador strong {
+  /* Separa el valor de su etiqueta. */
+  margin-top: 4px;
+  /* Destaca el valor principal. */
+  font-size: 24px;
+}
+
+.dato-ganadas strong,
+.dato-exito strong {
+  color: #4ade80;
+}
+
+.dato-perdidas strong {
+  color: #f87171;
+}
+
+.estrategias {
+  /* Coloca ambas estrategias en columnas. */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 18px 0;
+  font-size: 14px;
+}
+
+.estrategias article {
+  padding: 12px;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 10px;
+}
+
+.estrategias article > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.barra {
+  /* Define la altura de la barra. */
+  height: 7px;
+  /* Oculta el progreso fuera del contenedor. */
+  overflow: hidden;
+  background: #334155;
   border-radius: 999px;
+}
+
+.barra span {
+  /* Permite controlar el ancho del progreso. */
+  display: block;
+  width: 0;
+  height: 100%;
+  background: #4ade80;
+  border-radius: inherit;
+  transition: width 0.3s ease;
+}
+
+#reiniciar-estadisticas {
+  padding: 7px 12px;
+  border: 1px solid #64748b;
+  border-radius: 8px;
+  background: transparent;
+  color: #cbd5e1;
+  cursor: pointer;
 }
 
 /* Organiza las tres puertas. */
@@ -90,6 +171,8 @@ body {
   background-repeat: no-repeat;
   /* Centra la imagen. */
   background-position: center;
+  /* Elimina el fondo blanco predeterminado del botón. */
+  background-color: transparent;
   /* Elimina el borde normal. */
   border: none;
   /* Muestra un cursor de selección. */
@@ -169,6 +252,17 @@ body {
   cursor: pointer;
   /* Define el tamaño del texto. */
   font-size: 16px;
+}
+
+@media (max-width: 600px) {
+  /* Adapta las estadísticas a pantallas pequeñas. */
+  .marcador {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .estrategias {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Colorea el botón para quedarse. */

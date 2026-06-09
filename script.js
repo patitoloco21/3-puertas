@@ -14,6 +14,20 @@ const btnReiniciar = document.getElementById("reiniciar");
 const contadorGanadas = document.getElementById("ganadas");
 // Selecciona el contador de derrotas.
 const contadorPerdidas = document.getElementById("perdidas");
+// Selecciona el contador de partidas totales.
+const contadorPartidas = document.getElementById("partidas");
+// Selecciona el porcentaje general de victorias.
+const contadorPorcentaje = document.getElementById("porcentaje");
+// Selecciona el resultado de la estrategia de quedarse.
+const estadisticaQuedarse = document.getElementById("quedarse-estadistica");
+// Selecciona el resultado de la estrategia de cambiar.
+const estadisticaCambiar = document.getElementById("cambiar-estadistica");
+// Selecciona el botón que borra las estadísticas.
+const btnReiniciarEstadisticas = document.getElementById("reiniciar-estadisticas");
+// Selecciona la barra de éxito al quedarse.
+const barraQuedarse = document.getElementById("barra-quedarse");
+// Selecciona la barra de éxito al cambiar.
+const barraCambiar = document.getElementById("barra-cambiar");
 
 // Guarda el número de la puerta ganadora.
 let puertaPremiada;
@@ -27,6 +41,81 @@ let puertaCambio;
 let ganadas = 0;
 // Cuenta las partidas perdidas.
 let perdidas = 0;
+// Carga las estadísticas guardadas en el navegador.
+let estadisticas = cargarEstadisticas();
+
+// Recupera las estadísticas o crea unas vacías.
+function cargarEstadisticas() {
+  // Lee los datos guardados en localStorage.
+  const guardadas = localStorage.getItem("estadisticasMontyHall");
+  // Convierte los datos guardados o devuelve valores iniciales.
+  return guardadas ? JSON.parse(guardadas) : {
+    ganadas: 0,
+    perdidas: 0,
+    quedarse: { partidas: 0, ganadas: 0 },
+    cambiar: { partidas: 0, ganadas: 0 }
+  };
+}
+
+// Calcula el porcentaje entero de victorias.
+function calcularPorcentaje(victorias, partidas) {
+  // Evita dividir entre cero cuando no hay partidas.
+  return partidas === 0 ? 0 : Math.round((victorias / partidas) * 100);
+}
+
+// Refresca todos los datos visibles y los guarda.
+function actualizarEstadisticas() {
+  // Calcula el total de partidas terminadas.
+  const partidas = estadisticas.ganadas + estadisticas.perdidas;
+  // Sincroniza el contador general de victorias.
+  ganadas = estadisticas.ganadas;
+  // Sincroniza el contador general de derrotas.
+  perdidas = estadisticas.perdidas;
+
+  // Muestra el total de partidas.
+  contadorPartidas.textContent = partidas;
+  // Muestra el total de victorias.
+  contadorGanadas.textContent = ganadas;
+  // Muestra el total de derrotas.
+  contadorPerdidas.textContent = perdidas;
+  // Muestra el porcentaje general.
+  contadorPorcentaje.textContent = `${calcularPorcentaje(ganadas, partidas)}%`;
+  // Muestra los resultados al quedarse.
+  estadisticaQuedarse.textContent =
+    `${estadisticas.quedarse.ganadas}/${estadisticas.quedarse.partidas} (${calcularPorcentaje(estadisticas.quedarse.ganadas, estadisticas.quedarse.partidas)}%)`;
+  // Muestra los resultados al cambiar.
+  estadisticaCambiar.textContent =
+    `${estadisticas.cambiar.ganadas}/${estadisticas.cambiar.partidas} (${calcularPorcentaje(estadisticas.cambiar.ganadas, estadisticas.cambiar.partidas)}%)`;
+  // Ajusta la barra de la estrategia de quedarse.
+  barraQuedarse.style.width =
+    `${calcularPorcentaje(estadisticas.quedarse.ganadas, estadisticas.quedarse.partidas)}%`;
+  // Ajusta la barra de la estrategia de cambiar.
+  barraCambiar.style.width =
+    `${calcularPorcentaje(estadisticas.cambiar.ganadas, estadisticas.cambiar.partidas)}%`;
+
+  // Guarda las estadísticas para conservarlas al recargar.
+  localStorage.setItem("estadisticasMontyHall", JSON.stringify(estadisticas));
+}
+
+// Registra una partida según su resultado y estrategia.
+function registrarResultado(gano, estrategia) {
+  // Suma una partida a la estrategia utilizada.
+  estadisticas[estrategia].partidas++;
+
+  // Comprueba si la partida terminó en victoria.
+  if (gano) {
+    // Suma una victoria general.
+    estadisticas.ganadas++;
+    // Suma una victoria a la estrategia utilizada.
+    estadisticas[estrategia].ganadas++;
+  } else {
+    // Suma una derrota general.
+    estadisticas.perdidas++;
+  }
+
+  // Actualiza el panel después del resultado.
+  actualizarEstadisticas();
+}
 
 // Prepara una partida nueva.
 function iniciarJuego() {
@@ -125,7 +214,7 @@ function abrirPuertaMonty() {
 }
 
 // Revela las puertas y registra el resultado.
-function finalizarJuego(eleccionFinal) {
+function finalizarJuego(eleccionFinal, estrategia) {
   // Recorre todas las puertas.
   puertas.forEach(puerta => {
     // Convierte su número de texto a número.
@@ -155,17 +244,11 @@ function finalizarJuego(eleccionFinal) {
 
   // Comprueba si la elección final ganó.
   if (eleccionFinal === puertaPremiada) {
-    // Suma una victoria.
-    ganadas++;
-    // Actualiza el contador de victorias.
-    contadorGanadas.textContent = ganadas;
+    registrarResultado(true, estrategia);
     // Muestra el mensaje ganador.
     resultado.textContent = "¡Ganaste el coche!";
   } else {
-    // Suma una derrota.
-    perdidas++;
-    // Actualiza el contador de derrotas.
-    contadorPerdidas.textContent = perdidas;
+    registrarResultado(false, estrategia);
     // Muestra el mensaje de derrota.
     resultado.textContent = "Perdiste, te tocó una cabra.";
   }
@@ -183,7 +266,7 @@ puertas.forEach(puerta => {
 // Escucha el botón para quedarse.
 btnQuedarse.addEventListener("click", () => {
   // Finaliza usando la elección inicial.
-  finalizarJuego(puertaElegida);
+  finalizarJuego(puertaElegida, "quedarse");
 });
 
 // Escucha el botón para cambiar.
@@ -206,12 +289,27 @@ btnCambiar.addEventListener("click", () => {
   // Espera un segundo antes de revelar.
   setTimeout(() => {
     // Finaliza usando la nueva puerta.
-    finalizarJuego(puertaCambio);
+    finalizarJuego(puertaCambio, "cambiar");
   }, 1000);
 });
 
 // Reinicia al pulsar el botón.
 btnReiniciar.addEventListener("click", iniciarJuego);
 
+// Escucha el botón para borrar estadísticas.
+btnReiniciarEstadisticas.addEventListener("click", () => {
+  // Restablece todos los contadores.
+  estadisticas = {
+    ganadas: 0,
+    perdidas: 0,
+    quedarse: { partidas: 0, ganadas: 0 },
+    cambiar: { partidas: 0, ganadas: 0 }
+  };
+  // Refresca y guarda los valores reiniciados.
+  actualizarEstadisticas();
+});
+
 // Inicia la primera partida.
+// Muestra las estadísticas guardadas.
+actualizarEstadisticas();
 iniciarJuego();
